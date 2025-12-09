@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>攻略指南 | Dy搜立正</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.loli.net/css2?family=ZCOOL+XiaoWei&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body, html { overflow: auto !important; height: auto !important; }
+        .article-wrapper { max-width: 800px; margin: 120px auto 80px auto; position: relative; z-index: 10; padding: 0 20px; }
+        .article-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-radius: 20px; padding: 50px; box-shadow: 0 20px 60px rgba(44, 37, 32, 0.1); border: 1px solid rgba(255, 255, 255, 0.8); position: relative; overflow: hidden; }
+        .article-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 6px; background: linear-gradient(90deg, transparent, #fabc82, transparent); } /* 攻略用橙色系 */
+        .article-header { text-align: center; margin-bottom: 40px; border-bottom: 2px dashed #eee; padding-bottom: 30px; }
+        .article-title { font-family: var(--font-title); font-size: 36px; color: var(--primary); margin-bottom: 15px; }
+        .article-meta { color: #888; font-size: 13px; display: flex; justify-content: center; gap: 20px; }
+        .article-content { font-size: 16px; line-height: 1.8; color: #444; }
+        .article-content h3 { color: var(--primary); border-left: 4px solid #fabc82; padding-left: 12px; margin-top: 40px; font-size: 20px; }
+        .article-content img { max-width: 100%; border-radius: 12px; margin: 20px 0; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border: 1px solid #eee; }
+        .article-content ul { background: #fffaf0; padding: 20px 20px 20px 40px; border-radius: 12px; border: 1px solid #faeecd; }
+        .article-content li { margin-bottom: 10px; }
+        .navbar { position: fixed; top: 0; }
+        a.nav-btn { text-decoration: none; display: flex; align-items: center; justify-content: center; }
+        @media (max-width: 768px) { .article-card { padding: 25px; } .article-title { font-size: 24px; } .article-wrapper { margin-top: 20px; padding-bottom: 100px; } }
+    </style>
+</head>
+<body>
+    <div class="paper-texture"></div>
+    <canvas id="particle-canvas"></canvas>
+    <div id="cursor-dot"></div>
+    <div id="cursor-outline"></div>
+
+    <nav class="navbar">
+        <div class="logo"><img src="assets/logo.png" alt="Logo" class="logo-img"><span></span></div>
+        <div class="nav-items"><a href="index.html" class="nav-btn active" data-hover><i class="fa-solid fa-house"></i> 首页</a></div>
+    </nav>
+
+    <div class="article-wrapper">
+        <article class="article-card">
+            <header class="article-header">
+                <div style="display:inline-block; background:#fabc82; color:white; padding:4px 10px; border-radius:4px; font-size:12px; margin-bottom:15px; letter-spacing: 1px;">
+                    新手必读
+                </div>
+                <h1 class="article-title">别再徒手撸树了！萌新开荒避坑指南</h1>
+                <div class="article-meta">
+                    <span><i class="fa-regular fa-calendar"></i> 2025-11-20</span>
+                    <span><i class="fa-solid fa-book-open"></i> 资深御灵师</span>
+                </div>
+            </header>
+
+            <div class="article-content">
+                <p>初入山海大陆，面对广袤的地图和凶猛的异兽，很多新手会感到迷茫。为什么别人已经骑上了龙马驹，而你还在被略略汪追着咬？</p>
+                <p>本期指南将为你盘点开荒期最容易忽视的几个细节。</p>
+
+                <h3>🛠️ 科技树：工具优先</h3>
+                <p>很多人沉迷抓怪，却忘了升级“天工造物”等级。切记：<b>铁镐</b>和<b>优级葫芦</b>是前期质变的关键。</p>
+                
+                <img src="assets/banner-fallback.jpg" alt="科技树截图">
+
+                <h3>🐔 劳动力选择：谁是打工皇帝？</h3>
+                <p>不要小看路边随处可见的<b>[菜叶鸡]</b>和<b>[罗汉鼠]</b>！</p>
+                <ul>
+                    <li><b>菜叶鸡：</b>前期唯一的牧场产出源。鸡蛋不仅是食物，更是合成高级饲料的必备材料。抓5只放牧场，永远不亏。</li>
+                    <li><b>罗汉鼠：</b>虽然脾气不好，但它是初期少有的拥有[搬运Lv1]和[采矿Lv1]双词条的啾灵。把它扔到矿点，解放你的双手。</li>
+                </ul>
+
+                <h3>🏠 基地选址玄学</h3>
+                <p>千万不要把家安在新手村门口的平原上！那里资源贫瘠且容易被野怪骚扰。</p>
+                <p>推荐坐标：<b>(190, 670) 号角之丘</b>。这里地势高，拥有两处铁矿刷新点和一片浆果丛，且只有一个入口，易守难攻，是完美的初期据点。</p>
+                
+                <p style="margin-top: 50px; color: #999; text-align: center; font-size: 14px;">
+                    —— 祝各位探险顺利 ——
+                </p>
+            </div>
+        </article>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        window.addEventListener('resize', resize);
+        resize();
+        const particles = Array.from({length: 40}, () => ({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, r: Math.random() * 2, d: Math.random() * 0.5 + 0.1 }));
+        function draw() { ctx.clearRect(0, 0, canvas.width, canvas.height); ctx.fillStyle = "rgba(250, 188, 130, 0.2)"; particles.forEach(p => { ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill(); p.y -= p.d; if(p.y < 0) p.y = canvas.height; }); requestAnimationFrame(draw); }
+        draw();
+        const dot = document.getElementById('cursor-dot'); const outline = document.getElementById('cursor-outline');
+        if (window.matchMedia("(hover: hover)").matches) { window.addEventListener('mousemove', e => { const x = e.clientX, y = e.clientY; dot.style.left = x+'px'; dot.style.top = y+'px'; outline.animate({left: x+'px', top: y+'px'}, {duration: 500, fill: "forwards"}); }); document.querySelectorAll('a, button').forEach(el => { el.addEventListener('mouseenter', () => document.body.classList.add('hovering')); el.addEventListener('mouseleave', () => document.body.classList.remove('hovering')); }); }
+    </script>
+</body>
+</html>

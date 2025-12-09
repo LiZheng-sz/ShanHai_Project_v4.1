@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新闻资讯 | Dy搜立正</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.loli.net/css2?family=ZCOOL+XiaoWei&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body, html { overflow: auto !important; height: auto !important; }
+        .article-wrapper { max-width: 800px; margin: 120px auto 80px auto; position: relative; z-index: 10; padding: 0 20px; }
+        .article-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-radius: 20px; padding: 50px; box-shadow: 0 20px 60px rgba(44, 37, 32, 0.1); border: 1px solid rgba(255, 255, 255, 0.8); position: relative; overflow: hidden; }
+        .article-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 6px; background: linear-gradient(90deg, transparent, #44b4da, transparent); } /* 新闻用蓝色系 */
+        .article-header { text-align: center; margin-bottom: 40px; border-bottom: 2px dashed #eee; padding-bottom: 30px; }
+        .article-title { font-family: var(--font-title); font-size: 36px; color: var(--primary); margin-bottom: 15px; }
+        .article-meta { color: #888; font-size: 13px; display: flex; justify-content: center; gap: 20px; }
+        .article-content { font-size: 16px; line-height: 1.8; color: #444; }
+        .article-content h3 { color: var(--primary); border-left: 4px solid #44b4da; padding-left: 12px; margin-top: 40px; font-size: 20px; }
+        .article-content img { max-width: 100%; border-radius: 12px; margin: 20px 0; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border: 1px solid #eee; }
+        .article-content ul { background: #f0f8ff; padding: 20px 20px 20px 40px; border-radius: 12px; border: 1px solid #e0f0ff; }
+        .article-content li { margin-bottom: 10px; }
+        .navbar { position: fixed; top: 0; }
+        a.nav-btn { text-decoration: none; display: flex; align-items: center; justify-content: center; }
+        @media (max-width: 768px) { .article-card { padding: 25px; } .article-title { font-size: 24px; } .article-wrapper { margin-top: 20px; padding-bottom: 100px; } }
+    </style>
+</head>
+<body>
+    <div class="paper-texture"></div>
+    <canvas id="particle-canvas"></canvas>
+    <div id="cursor-dot"></div>
+    <div id="cursor-outline"></div>
+
+    <nav class="navbar">
+        <div class="logo"><img src="assets/logo.png" alt="Logo" class="logo-img"><span></span></div>
+        <div class="nav-items"><a href="index.html" class="nav-btn active" data-hover><i class="fa-solid fa-house"></i> 首页</a></div>
+    </nav>
+
+    <div class="article-wrapper">
+        <article class="article-card">
+            <header class="article-header">
+                <div style="display:inline-block; background:#44b4da; color:white; padding:4px 10px; border-radius:4px; font-size:12px; margin-bottom:15px; letter-spacing: 1px;">
+                    版本前瞻
+                </div>
+                <h1 class="article-title">云端激战：全新模式「天空竞技场」详解</h1>
+                <div class="article-meta">
+                    <span><i class="fa-regular fa-calendar"></i> 2025-11-25</span>
+                    <span><i class="fa-solid fa-gamepad"></i> 玩法前瞻</span>
+                </div>
+            </header>
+
+            <div class="article-content">
+                <p>随着山海大陆的灵气复苏，一座漂浮在云端的古老遗迹显露了真容。传说这里曾是上古龙族的试炼之地，如今，它将成为御灵师们证明实力的最高舞台。</p>
+                <p><b>天空竞技场</b>模式将于下周维护后正式实装！</p>
+
+                <h3>⚔️ 垂直立体战场</h3>
+                <p>与地面的平原战斗不同，天空竞技场由数个高低错落的浮空平台组成。这里没有围栏，一旦跌落云层即判定为当前回合失败。</p>
+                
+                <img src="assets/banner-fallback.jpg" alt="竞技场概念图">
+
+                <p>利用“击退”技能将对手推下平台，或许比直接造成伤害更有效？飞行系啾灵在这里将获得名为<b>[御风]</b>的特殊Buff，移动速度提升30%。</p>
+
+                <h3>🛡️ 3v3 车轮战机制</h3>
+                <p>竞技场采用经典的 3v3 KOF（拳皇）赛制：</p>
+                <ul>
+                    <li>双方各携带3只啾灵出战，按顺序上场。</li>
+                    <li>击败对手一只啾灵后，胜利方啾灵保留当前血量继续战斗，直至一方全部战败。</li>
+                    <li>每场战斗之间，无法使用药物道具，十分考验队伍的续航能力和阵容搭配。</li>
+                </ul>
+
+                <h3>🏆 赛季奖励</h3>
+                <p>参与排位赛，段位达到“流云宗师”的玩家，将获得赛季限定坐骑皮肤：<b>[云中鹤·绯红]</b> 以及大量天工造物材料。</p>
+                
+                <p style="margin-top: 50px; color: #999; text-align: center; font-size: 14px;">
+                    —— 战斗策划组 ——
+                </p>
+            </div>
+        </article>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        window.addEventListener('resize', resize);
+        resize();
+        const particles = Array.from({length: 40}, () => ({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, r: Math.random() * 2, d: Math.random() * 0.5 + 0.1 }));
+        function draw() { ctx.clearRect(0, 0, canvas.width, canvas.height); ctx.fillStyle = "rgba(68, 180, 218, 0.2)"; particles.forEach(p => { ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill(); p.y -= p.d; if(p.y < 0) p.y = canvas.height; }); requestAnimationFrame(draw); }
+        draw();
+        const dot = document.getElementById('cursor-dot'); const outline = document.getElementById('cursor-outline');
+        if (window.matchMedia("(hover: hover)").matches) { window.addEventListener('mousemove', e => { const x = e.clientX, y = e.clientY; dot.style.left = x+'px'; dot.style.top = y+'px'; outline.animate({left: x+'px', top: y+'px'}, {duration: 500, fill: "forwards"}); }); document.querySelectorAll('a, button').forEach(el => { el.addEventListener('mouseenter', () => document.body.classList.add('hovering')); el.addEventListener('mouseleave', () => document.body.classList.remove('hovering')); }); }
+    </script>
+</body>
+</html>

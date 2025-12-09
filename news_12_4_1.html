@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>活动公告 | Dy搜立正</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.loli.net/css2?family=ZCOOL+XiaoWei&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body, html { overflow: auto !important; height: auto !important; }
+        .article-wrapper { max-width: 800px; margin: 120px auto 80px auto; position: relative; z-index: 10; padding: 0 20px; }
+        .article-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); border-radius: 20px; padding: 50px; box-shadow: 0 20px 60px rgba(44, 37, 32, 0.1); border: 1px solid rgba(255, 255, 255, 0.8); position: relative; overflow: hidden; }
+        .article-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 6px; background: linear-gradient(90deg, transparent, #ff6b6b, transparent); } /* 活动用红色系顶部条 */
+        .article-header { text-align: center; margin-bottom: 40px; border-bottom: 2px dashed #eee; padding-bottom: 30px; }
+        .article-title { font-family: var(--font-title); font-size: 36px; color: var(--primary); margin-bottom: 15px; }
+        .article-meta { color: #888; font-size: 13px; display: flex; justify-content: center; gap: 20px; }
+        .article-content { font-size: 16px; line-height: 1.8; color: #444; }
+        .article-content h3 { color: var(--primary); border-left: 4px solid #ff6b6b; padding-left: 12px; margin-top: 40px; font-size: 20px; }
+        .article-content img { max-width: 100%; border-radius: 12px; margin: 20px 0; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border: 1px solid #eee; }
+        .article-content ul { background: #fff5f5; padding: 20px 20px 20px 40px; border-radius: 12px; border: 1px solid #ffecec; }
+        .article-content li { margin-bottom: 10px; }
+        .navbar { position: fixed; top: 0; }
+        a.nav-btn { text-decoration: none; display: flex; align-items: center; justify-content: center; }
+        @media (max-width: 768px) { .article-card { padding: 25px; } .article-title { font-size: 24px; } .article-wrapper { margin-top: 20px; padding-bottom: 100px; } }
+    </style>
+</head>
+<body>
+    <div class="paper-texture"></div>
+    <canvas id="particle-canvas"></canvas>
+    <div id="cursor-dot"></div>
+    <div id="cursor-outline"></div>
+
+    <nav class="navbar">
+        <div class="logo"><img src="assets/logo.png" alt="Logo" class="logo-img"><span></span></div>
+        <div class="nav-items"><a href="index.html" class="nav-btn active" data-hover><i class="fa-solid fa-house"></i> 首页</a></div>
+    </nav>
+
+    <div class="article-wrapper">
+        <article class="article-card">
+            <header class="article-header">
+                <div style="display:inline-block; background:#ff6b6b; color:white; padding:4px 10px; border-radius:4px; font-size:12px; margin-bottom:15px; letter-spacing: 1px;">
+                    限时活动
+                </div>
+                <h1 class="article-title">测试服福利：找“老邓”寄存啾灵去正式服</h1>
+                <div class="article-meta">
+                    <span><i class="fa-regular fa-calendar"></i> 2025-11-27</span>
+                    <span><i class="fa-regular fa-clock"></i> 截止时间：12月10日</span>
+                </div>
+            </header>
+
+            <div class="article-content">
+                <p>各位参与早期技术测试的“开拓者”们：</p>
+                <p>随着正式服开启日期的临近，为了感谢大家这段时间的辛勤付出，我们特别开启了<b>「跨界寄存」</b>活动。你心爱的稀有啾灵，有机会跟你一起前往新世界啦！</p>
+
+                <h3>👴 神秘NPC：位面行者·老邓</h3>
+                <p>根据前线情报，一位自称“老邓”的神秘商人出现在了<b>新手村码头</b>附近。他掌握着穿梭位面的古老秘术，可以帮助你将当下的部分数据“偷渡”到未来。</p>
+                
+                <img src="assets/banner-fallback.jpg" alt="老邓的位置截图">
+
+                <h3>📜 寄存规则说明</h3>
+                <p>由于位面通道极其不稳定，老邓表示只能携带少量的灵魂能量。请仔细阅读以下规则：</p>
+                <ul>
+                    <li><b>数量限制：</b>每位玩家最多可寄存 <b>1只</b> 啾灵。</li>
+                    <li><b>属性折损：</b>转移后的啾灵将重置为 Lv.1，但会保留<b>性格</b>与<b>稀有词条</b>。</li>
+                    <li><b>禁运品：</b>携带的装备、持有的物品无法通过检疫，请务必卸下装备。</li>
+                    <li><b>特殊限制：</b>“神兽”级别的啾灵（如深渊龙王）能量过大，无法寄存。</li>
+                </ul>
+
+                <h3>⚠️ 注意事项</h3>
+                <blockquote>
+                    <i class="fa-solid fa-circle-exclamation" style="color:#ff6b6b"></i> <b>警告：</b> 本次活动将在服务器关闭前24小时结束。请务必在截止日期前完成交互，否则你的伙伴将永远留在旧世界！
+                </blockquote>
+                
+                <p style="margin-top: 50px; color: #999; text-align: center; font-size: 14px;">
+                    —— 山海寻灵运营组 ——
+                </p>
+            </div>
+        </article>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        window.addEventListener('resize', resize);
+        resize();
+        const particles = Array.from({length: 40}, () => ({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, r: Math.random() * 2, d: Math.random() * 0.5 + 0.1 }));
+        function draw() { ctx.clearRect(0, 0, canvas.width, canvas.height); ctx.fillStyle = "rgba(255, 107, 107, 0.2)"; particles.forEach(p => { ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill(); p.y -= p.d; if(p.y < 0) p.y = canvas.height; }); requestAnimationFrame(draw); }
+        draw();
+        const dot = document.getElementById('cursor-dot'); const outline = document.getElementById('cursor-outline');
+        if (window.matchMedia("(hover: hover)").matches) { window.addEventListener('mousemove', e => { const x = e.clientX, y = e.clientY; dot.style.left = x+'px'; dot.style.top = y+'px'; outline.animate({left: x+'px', top: y+'px'}, {duration: 500, fill: "forwards"}); }); document.querySelectorAll('a, button').forEach(el => { el.addEventListener('mouseenter', () => document.body.classList.add('hovering')); el.addEventListener('mouseleave', () => document.body.classList.remove('hovering')); }); }
+    </script>
+</body>
+</html>

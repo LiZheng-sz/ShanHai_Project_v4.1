@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>山海寻灵 | Dy搜立正</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcdn.net/ajax/libs/leaflet/1.9.4/leaflet.min.css" rel="stylesheet">
+    <link href="https://fonts.loli.net/css2?family=ZCOOL+XiaoWei&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    
+    <div class="paper-texture"></div>
+    <canvas id="particle-canvas"></canvas>
+    <div id="cursor-dot"></div>
+    <div id="cursor-outline"></div>
+
+    <div id="intro-gate">
+        <div class="loader-wrapper">
+            <div class="loader-ring"></div>
+            <div class="loader-ring"></div>
+        </div>
+        <div class="loader-text">山海寻灵</div>
+        <div style="margin-top:10px; color:#666; font-size:12px; opacity:0; animation:fadeInUp 1s forwards 1s;">正在扫描山海大陆...</div>
+    </div>
+
+    <nav class="navbar">
+          <div class="logo">
+              <img src="assets/logo.png" alt="Logo" class="logo-img"> 
+              <span></span>
+          </div>
+        <div class="nav-items">	
+            <button class="nav-btn active" onclick="switchView('home', this)" data-hover><i class="fa-solid fa-house"></i> 首页</button>
+            <button class="nav-btn" onclick="switchView('dex', this)" data-hover><i class="fa-solid fa-book-journal-whills"></i> 啾灵图鉴</button>
+            <button class="nav-btn" onclick="switchView('craft', this)" data-hover><i class="fa-solid fa-scroll"></i> 天工造物</button>
+            <button class="nav-btn" onclick="switchView('map', this)" data-hover><i class="fa-solid fa-map-location"></i> 山海大陆</button>
+            <button class="nav-btn" onclick="switchView('breed', this)" data-hover><i class="fa-solid fa-yin-yang"></i> 旧的？放转转</button>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <div id="home" class="view-section active">
+            <div class="home-dashboard">
+    
+    <div class="hero-banner" data-hover onclick="window.open('https://ymzx.qq.com/', '_blank')" style="cursor: pointer;">
+        <video autoplay muted loop playsinline class="hero-video" poster="assets/banner-fallback.jpg">
+            <source src="background.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 style="margin:0 0 10px 0; font-size:32px; color:var(--accent);">欢迎回到山海大陆</h1>
+            <p style="margin:0; opacity:0.9; font-size:16px;">现已开放预约，点击前往官方预约通道 | 当前版本 v3.5</p>
+        </div>
+        <div class="hero-icon" style="font-size:100px; color:rgba(255,255,255,0.3); transform: rotate(-15deg); z-index: 2;">
+            <i class="fa-solid fa-dragon"></i>
+        </div>
+    </div>
+
+    <div style="display:flex; flex-direction:column; gap:25px;">
+        <div class="panel-box">
+            <div class="panel-header" style="display:flex; justify-content:space-between; margin-bottom:20px; border-bottom:1px solid #eee; padding-bottom:15px;">
+                <span style="font-size:18px; font-weight:bold; color:var(--primary);"><i class="fa-solid fa-bullhorn" style="color:var(--accent); margin-right:8px;"></i> 星梦快报</span>
+                <span style="font-size:12px; color:#999; cursor:pointer;" data-hover>更多 ></span>
+            </div>
+            <div class="news-list" id="news-container"></div>
+        </div>
+
+        <div class="panel-box">
+            <div class="panel-header" style="margin-bottom:20px; border-bottom:1px solid #eee; padding-bottom:15px;">
+                <span style="font-size:18px; font-weight:bold; color:var(--primary);"><i class="fa-solid fa-chart-pie" style="color:var(--accent); margin-right:8px;"></i> 观测报告</span>
+            </div>
+            <div class="report-stats">
+                <div class="stat-box">
+                    <div class="stat-num" id="stat-count">0</div>
+                    <div class="stat-label">已收录啾灵</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-num" id="stat-article">0</div>
+                    <div class="stat-label">文章收录</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="display:flex; flex-direction:column; gap:25px;">
+        
+        <div class="panel-box feature-entry-card" onclick="switchView('breed')" data-hover>
+            <div style="position:relative; z-index:2;">
+                <h3 style="margin:0 0 5px 0; color:var(--primary);">啾灵展示墙</h3>
+                <p style="margin:0; font-size:13px; color:#666;">
+                    看看其他御灵师的极品灵兽，<br>或分享你的培养成果。
+                </p>
+                <div style="margin-top:15px; font-size:12px; font-weight:bold; color:var(--accent);">
+                    点击前往 <i class="fa-solid fa-arrow-right"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-box" style="flex:1;">
+            <div class="panel-header" style="margin-bottom:20px; border-bottom:1px solid #eee; padding-bottom:15px;">
+                <span style="font-size:18px; font-weight:bold; color:var(--primary);"><i class="fa-solid fa-compass" style="color:var(--accent); margin-right:8px;"></i> 探险手记</span>
+            </div>
+            <div class="guide-grid" id="guide-container"></div>
+        </div>
+    </div>
+</div>
+        </div>
+
+        <div id="news-view" class="view-section">
+            <div onclick="app.closeNews()" style="cursor: pointer; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px; color: var(--primary); font-weight: bold; font-size: 16px; padding: 10px 0;">
+                 <i class="fa-solid fa-arrow-left"></i> 返回首页
+            </div>
+            
+            <div id="news-content-area"></div>
+        </div>
+
+        <div id="dex" class="view-section">
+    <div class="dex-layout-container">
+        <div class="dex-sidebar">
+            <div class="sidebar-header" style="padding: 15px; border-bottom: 1px solid rgba(0,0,0,0.05);">
+                <input type="text" class="glass-input" id="dexSearch" placeholder="搜名字..." oninput="app.filterDex()" style="width: 100%; margin-bottom: 10px; padding: 10px;">
+                <select class="glass-select" id="dexFilter" onchange="app.filterDex()" style="width: 100%; padding: 8px;">
+                    <option value="all">全属性</option>
+                    <option value="金">金系</option>
+                    <option value="木">木系</option>
+                    <option value="水">水系</option>
+                    <option value="火">火系</option>
+                    <option value="土">土系</option>
+                    <option value="冰">冰系</option>
+                    <option value="龙">龙系</option>
+                    <option value="妖">妖系</option>
+                </select>
+            </div>
+            
+            <div class="dex-list" id="dex-list"></div>
+        </div>
+
+        <div class="dex-main-content">
+            <div class="mobile-back-btn" onclick="backToDexList()">
+                   <i class="fa-solid fa-arrow-left"></i> 返回列表
+            </div>
+            <div class="dex-tabs">
+                <div class="dex-tab" onclick="app.jumpToLocation()" style="cursor: pointer;">
+                    <i class="fa-solid fa-map-location-dot"></i> 分布地区
+                </div>
+                <div class="dex-tab active">形态特征</div>
+            </div>
+
+            <div class="dex-detail-card" id="dex-detail-view">
+                <div class="empty-state">请在左侧选择一只啾灵查看详情</div>
+                
+                <div class="detail-grid" style="display:none;" id="detail-content">
+                    <div class="visual-area">
+                        <div class="visual-circle"></div> 
+                        <img src="" alt="" class="creature-big-img" id="detail-img">
+                        <div class="bg-deco-text">NO.<span id="detail-id">000</span></div>
+                    </div>
+
+                    <div class="info-panel">
+                        <div class="info-header">
+                            <h2 id="detail-name">啾灵名称</h2>
+                            <div class="element-group" id="detail-element" style="display: flex; gap: 5px;"></div>
+                        </div>
+                        <div class="info-section">
+                            <label>工作适应性:</label>
+                            <div class="work-icons" id="detail-work"></div>
+                        </div>
+                        <div class="info-section">
+                            <label>立正锐评:</label>
+                            <div class="drop-items" id="detail-drops"></div>
+                        </div>
+                    </div>
+
+                    <div class="desc-footer">
+                        <div class="catch-rate" style="display:block;"> 
+                            <div id="detail-relation-area" style="width:100%;"></div>
+                        </div>
+
+                        <div class="desc-text-box">
+                            <p id="detail-desc">这里是描述文本...</p>
+                        </div>
+
+                        <div class="dex-nav-actions" style="margin-top: 20px; display: flex; justify-content: space-between; gap: 15px;">
+                            <button class="btn btn-primary" onclick="app.switchSpirit(-1)" style="flex:1;">
+                                <i class="fa-solid fa-arrow-left"></i> 上一只
+                            </button>
+                            <button class="btn btn-primary" onclick="app.switchSpirit(1)" style="flex:1;">
+                                下一只 <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="craft" class="view-section">
+    <div class="craft-layout">
+        <div class="craft-sidebar">
+            <div class="search-container" style="margin: 0 0 20px 0; position:relative; top:0;">
+                <input type="text" class="glass-input" id="craftSearch" placeholder="搜索配方 (如: 鞍具, 碳纤维)..." oninput="app.filterCraft()">
+            </div>
+            <div id="recipe-list" class="craft-list-container"></div>
+        </div>
+
+        <div class="craft-main">
+    
+    <div class="craft-tabs-top">
+        <div class="c-tab active" onclick="app.switchCraftMode('lookup')" id="c-tab-lookup">
+            <i class="fa-solid fa-magnifying-glass"></i> 配方检索
+        </div>
+        <div class="c-tab" onclick="app.switchCraftMode('cart')" id="c-tab-cart">
+            <i class="fa-solid fa-cart-shopping"></i> 筹备清单
+            <span class="cart-badge" id="cart-badge" style="display:none">0</span>
+        </div>
+    </div>
+
+    <div id="view-craft-lookup" class="craft-view-panel active">
+        <div id="blueprint-panel" class="blueprint-card">
+            <div class="mobile-craft-back" onclick="app.closeCraftDetail()">
+                 <i class="fa-solid fa-arrow-left"></i> 返回配方列表
+            </div>
+            <div class="empty-state-craft">
+                <i class="fa-solid fa-compass-drafting" style="font-size: 48px; margin-bottom: 20px; color:#ddd;"></i>
+                <p>点击左侧列表查看配方</p>
+            </div>
+            
+            <div id="craft-detail-content" style="display:none;">
+                <div class="blueprint-header">
+                    <h2 id="bp-name">物品名称</h2>
+                    <div class="bp-meta">
+                        <span id="bp-type" class="bp-tag">类型</span>
+                        <span id="bp-yield" class="bp-tag warning">产量: 1</span>
+                    </div>
+                </div>
+
+                <div class="calc-control-group">
+                    <div class="calc-control">
+                        <label>制作数量:</label>
+                        <div class="stepper">
+                            <button onclick="app.updateCraftCalc(-1)">-</button>
+                            <input type="number" id="calc-qty" value="1" min="1" onchange="app.calcCraftMaterials()">
+                            <button onclick="app.updateCraftCalc(1)">+</button>
+                        </div>
+                    </div>
+                    <button class="btn-add-cart" onclick="app.addToCart()">
+                        <i class="fa-solid fa-plus"></i> 加入清单
+                    </button>
+                </div>
+
+                <div class="blueprint-body">
+                    <div class="bp-tabs">
+                        <div class="bp-tab active" onclick="app.switchBpTab('raw')" id="tab-raw">单件材料</div>
+                        <div class="bp-tab" onclick="app.switchBpTab('tree')" id="tab-tree">合成树</div>
+                    </div>
+                    <div id="view-raw" class="bp-view active">
+                        <div id="raw-mat-list" class="mat-grid"></div>
+                    </div>
+                    <div id="view-tree" class="bp-view">
+                        <div id="tree-container" class="tree-wrapper"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="view-craft-cart" class="craft-view-panel">
+        <div class="blueprint-card">
+            <div class="cart-header">
+                <h3><i class="fa-solid fa-clipboard-list"></i> 待制作物品</h3>
+                <button class="btn-clear" onclick="app.clearCart()">清空清单</button>
+            </div>
+            
+            <div id="cart-list-container" class="cart-items-box">
+                <div style="text-align:center; color:#999; padding:40px;">
+                    清单是空的，快去左侧添加配方吧~
+                </div>
+            </div>
+
+            <div class="total-mats-area">
+                <h3 style="margin-bottom:15px; border-top:2px dashed #eee; padding-top:20px;">
+                    <i class="fa-solid fa-cubes-stacked"></i> 
+                    总计原材料需求
+                    <span style="font-size:12px; font-weight:normal; color:#888;">(所有物品汇总)</span>
+                </h3>
+                <div id="cart-total-mats" class="mat-grid"></div>
+            </div>
+                  </div>
+              </div>
+
+        </div>
+    </div>
+</div>
+
+<div id="map" class="view-section" style="padding: 0 !important; overflow: hidden !important; position: relative !important;">
+    
+    <div id="map-container" class="map-wrapper" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;"></div>
+
+    <div class="mobile-map-btn" onclick="toggleMapControls()" data-hover style="z-index: 999;">
+        <img src="assets/orb.png" alt="图层">
+    </div>
+
+    <div class="mobile-rotate-btn" onclick="app.toggleLandscape()" data-hover style="z-index: 999;">
+        <i class="fa-solid fa-mobile-screen-button"></i>
+    </div>
+
+<div class="map-layer-control" id="map-controls" style="z-index: 1000;">
+    <div class="control-header-mobile">
+        <span>地图工具</span>
+        <i class="fa-solid fa-times" onclick="toggleMapControls()"></i>
+    </div>
+
+    <div class="control-section" style="margin-bottom: 10px;">
+        <div class="search-wrapper" style="position: relative;">
+            <input type="text" id="map-inner-search" class="glass-input" 
+                   placeholder="搜点位 (如: 草猿山)..." 
+                   oninput="searchMapLocation(this.value)"
+                   style="padding: 8px 30px 8px 10px; font-size: 13px; width: 100%;">
+            <i class="fa-solid fa-search" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: #999; font-size: 12px;"></i>
+        </div>
+    </div>
+
+    <div class="control-section">
+        <div class="section-title">
+            图层筛选 <span style="font-weight:normal; font-size:10px; color:#ccc; margin-left:5px;">(双击图标只看此项)</span>
+        </div>
+        
+        <div class="layer-toggle active" onclick="toggleLayer('orb', this)" ondblclick="isolateLayer('orb')" data-hover title="双击只看灵珠">
+            <img src="assets/orb.png"> 灵珠
+        </div>
+        <div class="layer-toggle active" onclick="toggleLayer('chest', this)" ondblclick="isolateLayer('chest')" data-hover title="双击只看宝箱">
+            <img src="assets/chest.png"> 宝箱
+        </div>
+        <div class="layer-toggle active" onclick="toggleLayer('teleport', this)" ondblclick="isolateLayer('teleport')" data-hover title="双击只看传送点">
+            <img src="assets/teleport.png"> 传送点
+        </div>
+        <div class="layer-toggle active" onclick="toggleLayer('user', this)" ondblclick="isolateLayer('user')" data-hover title="双击只看BOSS">
+            <img src="assets/user.png"> 野外boss
+        </div>
+    </div>
+
+    <div class="control-section" style="border-top: 1px dashed #ddd; margin-top: 10px; padding-top: 10px;">
+        <div class="section-title">数据管理</div>
+        <div class="layer-toggle" onclick="exportMapData()" data-hover>
+            <i class="fa-solid fa-download"></i> 导出备份
+        </div>
+        <div class="layer-toggle" onclick="triggerImport()" data-hover>
+            <i class="fa-solid fa-upload"></i> 导入数据
+        </div>
+        <input type="file" id="import-input" style="display: none;" accept=".json" onchange="importMapData(this)">
+    </div>
+</div>
+
+</div>
+
+  <div id="breed" class="view-section">
+    <div class="showcase-layout">
+        <div class="showcase-header">
+            <div>
+                <h2 style="color:var(--primary); margin:0;">御灵师风采展示</h2>
+                <p style="color:#888; font-size:13px; margin-top:5px;">这里展示大家投稿的极品啾灵，点击卡片可复制联系方式。</p>
+            </div>
+            <button class="btn btn-primary" onclick="alert('投稿通道暂未开启，请加入官方群联系管理员！')" style="padding: 8px 15px; font-size:13px;">
+                <i class="fa-solid fa-camera"></i> 我要投稿
+            </button>
+        </div>
+
+        <div id="showcase-list" class="showcase-grid"></div>
+        
+                <div id="showcase-empty" style="display:none; text-align:center; padding:50px; color:#999;">
+                暂无展示数据
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="marker-modal-overlay">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div class="modal-title" style="font-size:18px; font-weight:bold;">地点详情</div>
+                <div class="modal-close" onclick="closeModal()" data-hover style="cursor:pointer;"><i class="fa-solid fa-times"></i></div>
+            </div>
+            
+            <div class="modal-body" style="padding:25px; overflow-y:auto; max-height: 60vh;">
+
+
+                <div class="form-group">
+                    <label style="display:block; font-size:12px; color:#888; margin-bottom:5px;">标记名称</label>
+                    <input type="text" id="marker-name" class="form-input">
+                </div>
+
+                <div class="form-group">
+                    <label style="display:block; font-size:12px; color:#888; margin-bottom:5px;">备注信息</label>
+                    <textarea id="marker-desc" class="form-textarea" style="height:60px; resize:none;"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label style="display:block; font-size:12px; color:#888; margin-bottom:5px;">标记类型</label>
+                    <select id="marker-type" class="form-select">
+                        <option value="user">🚩 野外boss</option>
+                        <option value="orb">🔵 灵珠</option>
+                        <option value="chest">📦 宝箱</option>
+                        <option value="teleport">⛩️ 传送点</option>
+                    </select>
+                </div>
+                
+                <div class="upload-area" onclick="document.getElementById('marker-img-input').click()" data-hover>
+                    <i class="fa-solid fa-cloud-arrow-up upload-icon" style="font-size:30px; color:#ccc; margin-bottom:10px;"></i>
+                    <div class="upload-text" style="color:#999; font-size:13px;">点击上传现场图片</div>
+                    <img id="marker-img-preview" class="upload-preview" alt="Preview">
+                    <input type="file" id="marker-img-input" accept="image/*" style="display:none" onchange="handleImageUpload(this)">
+                </div>
+
+                <input type="hidden" id="marker-lat">
+                <input type="hidden" id="marker-lng">
+                <input type="hidden" id="marker-id">
+            </div>
+
+            <div class="modal-footer" style="padding:20px; background:#f9f9f9; display:flex; gap:10px;">
+                <button class="btn btn-primary" onclick="saveMarkerData()" data-hover>保存记录</button>
+                <button class="btn btn-danger" id="btn-delete" onclick="deleteCurrentMarker()" data-hover>删除</button>
+            </div>
+        </div>
+    </div>
+
+<!--版权申明 -->
+<footer style="text-align: center; padding: 20px; color: #666; font-size: 12px;">
+    © 2024 山海寻灵. 版权所有. 未经授权禁止复制、转载或建立镜像.
+</footer>
+
+    <script src="https://cdn.bootcdn.net/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/map.js"></script>
+    <script src="js/app.js"></script>
+
+</body> 
+</html>

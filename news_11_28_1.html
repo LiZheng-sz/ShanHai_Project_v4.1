@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dy搜立正</title>
+    <link href="https://cdn.bootcdn.net/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.loli.net/css2?family=ZCOOL+XiaoWei&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    
+    <style>
+        /* === 核心修复：允许页面滚动 === */
+        body, html {
+            overflow: auto !important; /* 强制覆盖 style.css 中的 hidden */
+            height: auto !important;
+        }
+
+        /* 文章容器布局优化 */
+        .article-wrapper {
+            max-width: 800px;
+            /* 顶部留出导航栏的高度 (75px + 间隙) */
+            margin: 120px auto 80px auto; 
+            position: relative;
+            z-index: 10;
+            padding: 0 20px; /* 移动端防贴边 */
+        }
+
+        .article-card {
+            background: rgba(255, 255, 255, 0.95); /*稍微不透明一点，利于阅读*/
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 20px 60px rgba(44, 37, 32, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .article-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 6px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+        }
+
+        .article-header { text-align: center; margin-bottom: 40px; border-bottom: 2px dashed #eee; padding-bottom: 30px; }
+        .article-title { font-family: var(--font-title); font-size: 36px; color: var(--primary); margin-bottom: 15px; }
+        .article-meta { color: #888; font-size: 13px; display: flex; justify-content: center; gap: 20px; }
+        
+        .article-content { font-size: 16px; line-height: 1.8; color: #444; }
+        .article-content h3 { color: var(--primary); border-left: 4px solid var(--accent); padding-left: 12px; margin-top: 40px; font-size: 20px; }
+        .article-content img { max-width: 100%; border-radius: 12px; margin: 20px 0; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border: 1px solid #eee; }
+        .article-content ul { background: #fdfbf5; padding: 20px 20px 20px 40px; border-radius: 12px; border: 1px solid #f0eee5; }
+        .article-content li { margin-bottom: 10px; }
+
+        /* 针对本页面的导航栏微调 */
+        .navbar { position: fixed; top: 0; } /* 确保导航栏固定在顶部 */
+        
+        /* 这里的 .nav-btn 改为 a 标签样式修正 */
+        a.nav-btn { text-decoration: none; display: flex; align-items: center; justify-content: center; }
+
+        @media (max-width: 768px) {
+            .article-card { padding: 25px; }
+            .article-title { font-size: 24px; }
+            .article-wrapper { margin-top: 20px; padding-bottom: 100px; } /* 移动端底部留出导航栏空间 */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="paper-texture"></div>
+    <canvas id="particle-canvas"></canvas>
+    <div id="cursor-dot"></div>
+    <div id="cursor-outline"></div>
+
+    <nav class="navbar">
+        <div class="logo">
+            <img src="assets/logo.png" alt="Logo" class="logo-img"> 
+            <span></span>
+        </div>
+        <div class="nav-items">	
+            <a href="index.html" class="nav-btn active" data-hover><i class="fa-solid fa-house"></i> 首页</a>
+        </div>
+    </nav>
+
+    <div class="article-wrapper">
+        <article class="article-card">
+            <header class="article-header">
+                <div style="display:inline-block; background:#d4af37; color:white; padding:4px 10px; border-radius:4px; font-size:12px; margin-bottom:15px; letter-spacing: 1px;">
+                    版本更新
+                </div>
+                <h1 class="article-title">v2.1版本发布：新增 "山海地图" 与点位标记功能</h1>
+                <div class="article-meta">
+                    <span><i class="fa-regular fa-calendar"></i> 2025-11-28</span>
+                    <span><i class="fa-regular fa-user"></i> Dy搜立正</span>
+                </div>
+            </header>
+
+            <div class="article-content">
+                <p>亲爱的探险家们：</p>
+                <p>感谢大家对《星梦宝册》的支持！在本次 v2.1 版本更新中，我们带来了呼声最高的<b>「山海大陆地图」</b>功能。现在，你不仅可以查看全域地图，还能自由标记你发现的宝藏与强敌。</p>
+
+                <h3>🗺️ 全新功能：交互式地图</h3>
+                <p>不再需要在这个庞大的世界中迷路了。新的地图系统支持以下特性：</p>
+                <img src="assets/banner-fallback.jpg" alt="地图演示">
+                <ul>
+                    <li><b>自由缩放与拖拽：</b>使用滚轮缩放，查看世界的每一个角落。</li>
+                    <li><b>图层筛选：</b>一键显示/隐藏灵珠、宝箱、传送点或Boss图标，让地图更清爽。</li>
+                    <li><b>自定义标记：</b>点击地图任意位置，记录你的专属发现，并支持上传现场截图！</li>
+                </ul>
+
+                <h3>💾 数据备份与导入</h3>
+                <p>为了防止探险家们珍贵的标记数据丢失，我们增加了本地数据管理功能。</p>
+                <blockquote>
+                    <i class="fa-solid fa-triangle-exclamation" style="color:#ff6b6b"></i> <b>提示：</b> 所有的地图标记目前存储在浏览器本地。请定期使用"导出备份"功能。
+                </blockquote>
+                
+                <p style="margin-top: 50px; color: #999; text-align: center; font-size: 14px;">
+                    —— Dy搜立正 敬上 ——
+                </p>
+            </div>
+        </article>
+    </div>
+
+    <script>
+        // 简化的特效脚本
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        window.addEventListener('resize', resize);
+        resize();
+        
+        const particles = Array.from({length: 40}, () => ({
+            x: Math.random() * canvas.width, y: Math.random() * canvas.height,
+            r: Math.random() * 2, d: Math.random() * 0.5 + 0.1
+        }));
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "rgba(212, 175, 55, 0.3)";
+            particles.forEach(p => {
+                ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
+                p.y -= p.d; if(p.y < 0) p.y = canvas.height;
+            });
+            requestAnimationFrame(draw);
+        }
+        draw();
+
+        // 鼠标交互
+        const dot = document.getElementById('cursor-dot');
+        const outline = document.getElementById('cursor-outline');
+        if (window.matchMedia("(hover: hover)").matches) {
+            window.addEventListener('mousemove', e => {
+                const x = e.clientX, y = e.clientY;
+                dot.style.left = x+'px'; dot.style.top = y+'px';
+                outline.animate({left: x+'px', top: y+'px'}, {duration: 500, fill: "forwards"});
+            });
+            document.querySelectorAll('a, button').forEach(el => {
+                el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
+                el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+            });
+        }
+    </script>
+</body>
+</html>
